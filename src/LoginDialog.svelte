@@ -42,7 +42,7 @@
   
 </script>
 
-<dialog bind:this={dialog} on:close={(e) => {user === undefined ? e.preventDefault() : ""}} on:cancel={(e) => {user === undefined ? /*e.preventDefault()*/"" : ""}}>
+<dialog bind:this={dialog} on:close={(e) => {user === undefined ? e.preventDefault() : ""}} on:cancel={(e) => {user === undefined ? e.preventDefault() : ""}}>
   <section>
     <h1>kanban-friends</h1>
     <button on:click={login_google} class="google">Google</button>

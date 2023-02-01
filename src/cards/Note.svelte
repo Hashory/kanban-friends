@@ -1,17 +1,22 @@
 <script>
   import { NoteStickySolid ,PencilSolid, GripSolid } from "svelte-awesome-icons";
+  import CardValueEditing from "../lib/CardValueEditing.svelte";
 
   export let card;
+
+  let openModal;
 </script>
 
 <div class="card">
+  <CardValueEditing id={card.id} bind:value={card.value} bind:openModal/>
+
   <div class="head">
     <div class="left">
       <NoteStickySolid size="16"/>
       <div class="title">Note</div>
     </div>
     <div class="buttons">
-      <button class="edit"><PencilSolid size="16"/></button>
+      <button class="edit" on:click={openModal}><PencilSolid size="16"/></button>
       <button class="move"><GripSolid size="16"/></button>
     </div>
   </div>
@@ -59,8 +64,4 @@
     gap: 0.5rem;
   }
 
-  .debug {
-    font-size: small;
-    color: gray;
-  }
 </style>

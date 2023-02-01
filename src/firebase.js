@@ -9,8 +9,10 @@ const firebaseConfig = {
   appId: "1:781011783419:web:e2cf7b0e85820ee738aa5e"
 };
 
-function init() {
+export default function init() {
   const app = initializeApp(firebaseConfig);
 }
 
-export default init;
+export class userInfo{
+  static user = undefined;
+}

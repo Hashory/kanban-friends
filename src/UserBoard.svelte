@@ -3,6 +3,7 @@
 
   export let user;
 
+  // dammy data
   let userBoard = 
   {
     id: 1,
@@ -62,39 +63,46 @@
     ]
   };
 
-  // let status = Promise.resolve(userBoard);
+  /**
+   * @type {"loading" | "loaded" | "dammying"}
+   */
+  let status = "loading";
+  function setData(data) {
+    status = "loaded";
+    userBoard = data;
+  }
 
-  // async function load(idToken) {
-  //   const res = await fetch(`http://localhost:3000/v1/hand?userToken=${idToken}`, {method: "GET", mode: "no-cors",})
-  //   userBoard = await res.json();
-  // }
+  $: {
+    if(user !== undefined) {
+      console.log("user is logged in");
+      status = "loading";
+      user.getIdToken().then((idToken) => {
+        return fetch(`http://localhost:3000/v1/hand?userToken=${idToken}`, {method: "GET",});
+      }).then( res =>  res.json())
+      .then( data => {
+        console.log(data);
+        setData(data);
+      }).catch( error => {
+        console.error(error);
+        status = "dammying";
+        user = undefined;
+      })
+    } else {
+      console.log("user is not logged in");
+      status = "dammying";
+    }
+  }
 
-  // $: {
-  //   if(user !== undefined) {
-  //     console.log("user is logged in");
-  //     user.getIdToken().then((idToken) => {
-  //       status = load(idToken);      
-  //     });
-  //   } else {
-  //     console.log("user is not logged in");
-  //   }
-  // }
 </script>
 
 <div class="user-board">
-  <!--
-  {#await status}
+  {#if status === "loading"}
     <div>loading...</div>
-  {:then _userBoard}
-  -->
+  {:else if status === "loaded" || status === "dammying"}
     {#each userBoard.children as board}
       <Board bind:board />
     {/each}
-  <!--
-  {:catch error}
-    <div>読み込みに失敗しました</div>
-  {/await}
-  -->
+  {/if}
 </div>
 
 <style>

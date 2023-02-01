@@ -2,15 +2,20 @@
   import Note from "./cards/Note.svelte";
   import { PencilSolid, GripSolid } from "svelte-awesome-icons";
   import Discord from "./cards/Discord.svelte";
+  import CardValueEditing from "./lib/CardValueEditing.svelte";
 
   export let board;
+
+  let openModal;
 </script>
 
 <div class="board">
+  <CardValueEditing id={board.id} bind:value={board.value} bind:openModal/>
+
   <div class="head">
     <div class="heading">{board.value}</div>
     <div class="buttons">
-      <button class="edit"><PencilSolid /></button>
+      <button class="edit" on:click={openModal}><PencilSolid /></button>
       <button class="move"><GripSolid /></button>
     </div>
   </div>

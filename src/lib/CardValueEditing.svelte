@@ -1,6 +1,7 @@
 <script>
   import { getIdToken } from "firebase/auth";
   import { userInfo } from "../firebase";
+  import APIserverURl from "./apiserver";
 
   export const openModal = () => {
     input_value = value;
@@ -19,7 +20,7 @@
     dialog.close();
 
     getIdToken(userInfo.user).then((idToken) => {
-      fetch(`http://localhost:3000/v1/hand/update?userToken=${idToken}`, {
+      fetch(`${APIserverURl()}hand/update?userToken=${idToken}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

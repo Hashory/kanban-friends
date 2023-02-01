@@ -1,5 +1,6 @@
 <script>
   import Board from "./Board.svelte";
+  import APIserverURl from "./lib/apiserver";
 
   export let user;
 
@@ -77,7 +78,7 @@
       console.log("user is logged in");
       status = "loading";
       user.getIdToken().then((idToken) => {
-        return fetch(`http://localhost:3000/v1/hand?userToken=${idToken}`, {method: "GET",});
+        return fetch(`${APIserverURl()}hand?userToken=${idToken}`, {method: "GET",});
       }).then( res =>  res.json())
       .then( data => {
         console.log(data);

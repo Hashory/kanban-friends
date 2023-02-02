@@ -49,7 +49,9 @@
     <div>loading...</div>
   {:else if (status === "loaded" || status === "dammying") && userBoard !== undefined }
     {#each userBoard.children as board}
-      <Board bind:board />
+      {#if board.type === "board"}
+        <Board bind:board />
+      {/if}
     {/each}
   {/if}
 </div>

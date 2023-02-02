@@ -1,14 +1,17 @@
 <script>
-  import { NoteStickySolid ,PencilSolid, GripSolid } from "svelte-awesome-icons";
+  import { NoteStickySolid ,PencilSolid, GripSolid, TrashCanSolid } from "svelte-awesome-icons";
   import CardValueEditing from "../lib/CardValueEditing.svelte";
+  import CardDelete from "../lib/CardDelete.svelte";
 
   export let card;
 
-  let openModal;
+  let openEditModal;
+  let openDeleteModal;
 </script>
 
 <div class="card">
-  <CardValueEditing id={card.id} bind:value={card.value} bind:openModal/>
+  <CardValueEditing id={card.id} bind:value={card.value} bind:openModal={openEditModal}/>
+  <CardDelete bind:hand={card} bind:openModal={openDeleteModal}/>
 
   <div class="head">
     <div class="left">
@@ -16,8 +19,9 @@
       <div class="title">Note</div>
     </div>
     <div class="buttons">
-      <button class="edit" on:click={openModal}><PencilSolid size="16"/></button>
-      <button class="move"><GripSolid size="16"/></button>
+      <button class="delete" on:click={openDeleteModal}><TrashCanSolid size="15" /></button>
+      <button class="edit" on:click={openEditModal}><PencilSolid size="15"/></button>
+      <button class="move"><GripSolid size="15"/></button>
     </div>
   </div>
   
@@ -49,7 +53,7 @@
   .head .buttons {
     display: flex;
     flex-direction: row;
-    gap: 1px;
+    gap: 0;
     align-items: center;
   }
   .head button {

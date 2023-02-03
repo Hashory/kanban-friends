@@ -1,24 +1,56 @@
 <script>
-  import { DiscordBrand ,PencilSolid, GripSolid } from "svelte-awesome-icons";
+  import { DiscordBrand ,PencilSolid, GripSolid, TrashCanSolid } from "svelte-awesome-icons";
+  import CardValueEditing from "../lib/CardValueEditing.svelte";
+  import CardDelete from "../lib/CardDelete.svelte";
+  import APIserverURl from "../lib/apiserver";
+  import { onMount } from "svelte";
+
 
   export let card;
+
+let openEditModal;
+let openDeleteModal;
+/**
+ * @type {"online" | "idle" | "dnd" | "offline" | "none"}
+ */
+let status = 'none';
+let mounted = false;
+onMount(() => {mounted = true;})
+
+$: {
+  if(mounted) {
+    fetch(`${APIserverURl()}card/discord?discordUser=${card.value}`, {method: "GET",})
+    .then(res => res.json())
+    .then(data => {
+        status = data.status;
+    }).catch(error => {
+        console.error(error);
+        status = 'none';
+    })
+  }
+}
+
 </script>
 
 <div class="card">
+  <CardValueEditing id={card.id} bind:value={card.value} bind:openModal={openEditModal}/>
+  <CardDelete bind:hand={card} bind:openModal={openDeleteModal}/>
+
   <div class="head">
     <div class="left">
       <DiscordBrand size="16"/>
       <div class="title">Discord</div>
     </div>
     <div class="buttons">
-      <button class="edit"><PencilSolid size="16"/></button>
-      <button class="move"><GripSolid size="16"/></button>
+      <button class="delete" on:click={openDeleteModal}><TrashCanSolid size="15" /></button>
+      <button class="edit" on:click={openEditModal}><PencilSolid size="15"/></button>
+      <button class="move"><GripSolid size="15"/></button>
     </div>
   </div>
   
   <div class="content">
     <div class="name">{card.value}</div>
-    <div class="status">オンライン</div>
+    <div class="status">{status}</div>
   </div>
 
   <!-- <div class="debug">(id: {card.id})</div> -->
@@ -76,10 +108,5 @@
     border-radius: 50%;
     background-color: lightgreen;
     margin-inline-start: 0.5rem;
-  }
-
-  .debug {
-    font-size: small;
-    color: gray;
   }
 </style>

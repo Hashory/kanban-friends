@@ -14,7 +14,7 @@
 
   /**
    * Add a card to the board
-   * @param type {"note"}
+   * @param type {"note" | "discord"}
    */
   async function addCard(type) {
     console.log("addCard");
@@ -107,14 +107,14 @@
     <MenuItem let:active>
       <button on:click={() => addBoard()}>board</button>
     </MenuItem>
+    <MenuItem>
+      <button on:click={() => addCard("discord")}>Discord(beta)</button>
+    </MenuItem>
     <MenuItem disabled>
       <button>RSS(開発中)</button>
     </MenuItem>
     <MenuItem disabled>
       <button>Epic games(開発中)</button>
-    </MenuItem>
-    <MenuItem disabled>
-      <button>Discord(開発中)</button>
     </MenuItem>
     <MenuItem disabled>
       <button>Steam(開発中)</button>

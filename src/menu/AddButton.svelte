@@ -108,17 +108,17 @@
     <MenuItem>
       <button on:click={() => addCard("discord")}>Discord(beta)</button>
     </MenuItem>
-    <MenuItem disabled>
-      <button>RSS(開発中)</button>
+    <MenuItem disabled let:disabled>
+      <button class:disabled>RSS(開発中)</button>
     </MenuItem>
-    <MenuItem disabled>
-      <button>Epic games(開発中)</button>
+    <MenuItem disabled let:disabled>
+      <button class:disabled>Epic games(開発中)</button>
     </MenuItem>
-    <MenuItem disabled>
-      <button>Steam(開発中)</button>
+    <MenuItem disabled let:disabled>
+      <button class:disabled>Steam(開発中)</button>
     </MenuItem>
-    <MenuItem disabled>
-      <button>EA(開発中)</button>
+    <MenuItem disabled let:disabled>
+      <button class:disabled>EA(開発中)</button>
     </MenuItem>
   </MenuItems>
 </Menu>
@@ -130,4 +130,36 @@
     border: none;
     cursor: pointer;
   }
+
+  div :global(div[role="menu"]) {
+    background-color: rgb(13, 39, 70);
+    border: 1px solid #504f4f;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
+    position: absolute;
+    z-index: 10;
+    display: grid;
+    min-inline-size: 11rem;
+  }
+
+  div :global(div[role="menu"]) :global(button) {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-align: left;
+    width: 100%;
+  }
+  div :global(div[role="menu"]) :global(button):hover {
+    background-color: #0f4c8d;
+  }
+
+  div :global(div[role="menu"]) :global(button.disabled) {
+    color: #a0a0a0;
+    cursor: not-allowed;
+  }
+
 </style>

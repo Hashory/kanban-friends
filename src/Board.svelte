@@ -4,14 +4,26 @@
   import Discord from "./cards/Discord.svelte";
   import CardValueEditing from "./lib/CardValueEditing.svelte";
   import CardDelete from "./lib/CardDelete.svelte";
+  import { BoardDropHandler } from "./lib/DnDHelper";
 
   export let board;
+  export let boardIdx;
 
   let openEditModal;
   let openDeleteModal;
+
+  let dragOver = false;
 </script>
 
-<div class="board">
+<div class="board" 
+  class:drag-over={dragOver}
+  draggable="true" 
+  data-tag="board"
+  on:dragstart={(e) => {e.stopPropagation(); e.dataTransfer.setData("text", boardIdx)}}
+  on:dragover={(e)=> e.preventDefault()}
+  on:dragenter={() => {dragOver = true}} 
+  on:dragleave={() => {dragOver = false}}
+  on:drop={(e) => {BoardDropHandler(e, boardIdx)}}>
   <CardValueEditing id={board.id} bind:value={board.value} bind:openModal={openEditModal}/>
   <CardDelete bind:hand={board} bind:openModal={openDeleteModal}/>
 
@@ -24,11 +36,11 @@
     </div>
   </div>
   <div class="content">
-    {#each board.children as card}
+    {#each board.children as card, index}
       {#if card.type === "note"}
-        <Note bind:card />
+        <Note bind:card boardIdx={boardIdx} cardIdx={index}/>
       {:else if card.type === "discord"}
-        <Discord bind:card />
+        <Discord bind:card boardIdx={boardIdx} cardIdx={index}/>
       {/if}
     {/each}
   </div>
@@ -43,6 +55,9 @@
     border-radius: 36px;
     padding: 1rem;
     gap: 0.5rem;
+  }
+  .board.drag-over{
+    border: 3px dashed white;
   }
 
   .head {

@@ -2,6 +2,7 @@
   import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
   import { onMount } from "svelte";
   import { userInfo } from "./firebase";
+  import { userStore } from "./lib/store";
 
   let dialog;
   let mounted = false;
@@ -16,6 +17,7 @@
         const token = credential.accessToken;
         user = result.user;
         userInfo.user = user;
+        userStore.set(user);
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;

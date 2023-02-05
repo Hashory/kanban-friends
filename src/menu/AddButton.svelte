@@ -9,9 +9,7 @@
   import { PlusSolid } from "svelte-awesome-icons";
   import { userInfo } from "../firebase";
   import APIserverURl from "../lib/apiserver";
-
-  export let userBoard;
-
+  import { userBoardStore } from "../lib/store";
   /**
    * Add a card to the board
    * @param type {"note" | "discord"}
@@ -20,7 +18,7 @@
     console.log("addCard");
     try {
       // get parent id
-      const parentId = userBoard.children[0].id;
+      const parentId = $userBoardStore.children[0].id;
 
       let data = {
         type: type,
@@ -48,9 +46,9 @@
       })
 
       // apply changes to userBoard
-      const _userBoard = userBoard;
+      const _userBoard = $userBoardStore;
       _userBoard.children[0].children.push(newCard);
-      userBoard = _userBoard;
+      $userBoardStore = _userBoard;
 
     } catch {() => {console.log("error")}}
     
@@ -62,7 +60,7 @@
   async function addBoard() {
     console.log("addBoard");
     try {
-      const parentId = userBoard.id;
+      const parentId = $userBoardStore.id;
 
       let data = {
         type: "board",
@@ -90,9 +88,9 @@
       })
 
       // apply changes to userBoard
-      const _userBoard = userBoard;
+      const _userBoard = $userBoardStore;
       _userBoard.children.push(newBoard);
-      userBoard = _userBoard;
+      $userBoardStore = _userBoard;
     } catch {() => {console.log("error")}}
   }
 </script>

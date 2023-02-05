@@ -7,14 +7,13 @@
   } from "@rgossiaux/svelte-headlessui";
   import { getAuth, signOut } from "firebase/auth";
   import { UserSolid } from "svelte-awesome-icons";
-
-  export let user;
+  import { userStore } from "../lib/store";
 
   function logout() {
     const auth = getAuth();
     signOut(auth).then(() => {
       // Sign-out successful.
-      user = undefined;
+      $userStore = undefined;
     }).catch((error) => {
       // An error happened.
     });

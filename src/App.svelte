@@ -6,19 +6,18 @@
   import logo from "./assets/logo.png";
 
   let user;
-  let userBoard;
 </script>
 
 <LoginDialog bind:user/>
 <header>
   <img src={logo} alt="kanban-friends">
   <div class="menu">
-    <AddButton bind:userBoard/>
-    <UserButton bind:user/>
+    <AddButton />
+    <UserButton />
   </div>
 </header>
 <main>
-  <UserBoard bind:user bind:userBoard/>
+  <UserBoard />
 </main>
 
 <style>

@@ -3,13 +3,12 @@
   import APIserverURl from "./lib/apiserver";
   import dammyData from "./lib/dammyData";
   import { onMount } from "svelte";
+  import { userBoardStore } from "./lib/store";
+  import { userStore } from "./lib/store";
 
-  export let user;
-
-  export let userBoard;
   onMount(() => {
     // dammy data
-    userBoard = dammyData;
+    $userBoardStore = dammyData;
   });
 
   /**
@@ -18,14 +17,14 @@
   let status = "loading";
   function setData(data) {
     status = "loaded";
-    userBoard = data;
+    $userBoardStore = data;
   }
 
   $: {
-    if(user !== undefined) {
+    if($userStore !== undefined) {
       console.log("user is logged in");
       status = "loading";
-      user.getIdToken().then((idToken) => {
+      $userStore.getIdToken().then((idToken) => {
         return fetch(`${APIserverURl()}hand?userToken=${idToken}`, {method: "GET",});
       }).then( res =>  res.json())
       .then( data => {
@@ -34,7 +33,7 @@
       }).catch( error => {
         console.error(error);
         status = "dammying";
-        user = undefined;
+        $userStore = undefined;
       })
     } else {
       console.log("user is not logged in");
@@ -47,10 +46,10 @@
 <div class="user-board">
   {#if status === "loading"}
     <div>loading...</div>
-  {:else if (status === "loaded" || status === "dammying") && userBoard !== undefined }
-    {#each userBoard.children as board}
+  {:else if (status === "loaded" || status === "dammying") && $userBoardStore !== undefined }
+    {#each $userBoardStore.children as board, index}
       {#if board.type === "board"}
-        <Board bind:board />
+        <Board bind:board boardIdx={index}/>
       {/if}
     {/each}
   {/if}

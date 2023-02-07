@@ -1,7 +1,8 @@
 <script>
-  import Note from "./cards/Note.svelte";
   import { PencilSolid, GripSolid, TrashCanSolid } from "svelte-awesome-icons";
+  import Note from "./cards/Note.svelte";
   import Discord from "./cards/Discord.svelte";
+  import Github from "./cards/Github.svelte";
   import CardValueEditing from "./lib/CardValueEditing.svelte";
   import CardDelete from "./lib/CardDelete.svelte";
   import { BoardDropHandler } from "./lib/DnDHelper";
@@ -41,6 +42,8 @@
         <Note bind:card boardIdx={boardIdx} cardIdx={index}/>
       {:else if card.type === "discord"}
         <Discord bind:card boardIdx={boardIdx} cardIdx={index}/>
+      {:else if card.type === "github"}
+        <Github bind:card boardIdx={boardIdx} cardIdx={index}/>
       {/if}
     {/each}
   </div>

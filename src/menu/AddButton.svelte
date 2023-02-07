@@ -12,7 +12,7 @@
   import { userBoardStore } from "../lib/store";
   /**
    * Add a card to the board
-   * @param type {"note" | "discord"}
+   * @param type {"note" | "discord" | "github"}
    */
   async function addCard(type) {
     console.log("addCard");
@@ -107,6 +107,9 @@
     </MenuItem>
     <MenuItem>
       <button on:click={() => addCard("discord")}>Discord(beta)</button>
+    </MenuItem>
+    <MenuItem>
+      <button on:click={() => addCard("github")}>github</button>
     </MenuItem>
     <MenuItem disabled let:disabled>
       <button class:disabled>RSS(開発中)</button>

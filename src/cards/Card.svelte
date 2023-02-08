@@ -7,6 +7,8 @@
   export let card;
   export let cardIdx;
   export let boardIdx;
+  export let editMessage = "Edit card value"
+  export let editPlaceholder = "Edit";
 
   let openEditModal;
   let openDeleteModal;
@@ -23,7 +25,7 @@
   on:dragenter={() => {dragOver = true}} 
   on:dragleave={() => {dragOver = false}}
   on:drop={(e) => {CardDropHandler(e, cardIdx, boardIdx)}}>
-  <CardValueEditing id={card.id} bind:value={card.value} bind:openModal={openEditModal}/>
+  <CardValueEditing id={card.id} bind:value={card.value} bind:openModal={openEditModal} message={editMessage} placeholder={editPlaceholder}/>
   <CardDelete bind:hand={card} bind:openModal={openDeleteModal}/>
 
   <div class="head">

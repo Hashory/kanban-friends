@@ -33,7 +33,11 @@ $: {
 
 </script>
 
-<Card bind:card={card} boardIdx={boardIdx} cardIdx={cardIdx}>
+<Card bind:card={card} 
+  boardIdx={boardIdx} 
+  cardIdx={cardIdx}
+  editMessage="Discordのユーザー名を入力してください(friend#1234)"
+  editPlaceholder="friend#1234">
   <slot slot="heading">
     <DiscordBrand size="16"/>
     <div class="title">Discord</div>

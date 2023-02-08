@@ -33,7 +33,11 @@ $: {
 
 </script>
 
-<Card bind:card={card} boardIdx={boardIdx} cardIdx={cardIdx}>
+<Card bind:card={card} 
+  boardIdx={boardIdx} 
+  cardIdx={cardIdx} 
+  editMessage="githubユーザー名を入力してください"
+  editPlaceholder="username">
   <slot slot="heading">
     <GithubBrand size="16"/>
     <div class="title">github</div>

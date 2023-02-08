@@ -11,6 +11,9 @@
   export let id;
   export let value;
 
+  export let message;
+  export let placeholder;
+
   let dialog;
   let input_value;
 
@@ -42,7 +45,8 @@
 <dialog bind:this={dialog} on:click={(e) => {e.target.tagName === "DIALOG" ? dialog.close(): ""}}>
   <section>
     <div class="title">Edit</div>
-    <input bind:value={input_value}>
+    <div class="message">{message}</div>
+    <input bind:value={input_value} placeholder={placeholder}>
     <div class="buttons">
       <button class="cancel" on:click={() => dialog.close()}>キャンセル</button>
       <button class="save" on:click={save}>変更</button>

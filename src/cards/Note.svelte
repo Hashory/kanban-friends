@@ -7,7 +7,11 @@
   export let boardIdx;
 </script>
 
-<Card bind:card={card} boardIdx={boardIdx} cardIdx={cardIdx}>
+<Card bind:card={card} 
+  boardIdx={boardIdx} 
+  cardIdx={cardIdx}
+  editMessage="メモを入力してください"
+  editPlaceholder="メモを入力">
   <slot slot="heading">
     <NoteStickySolid size="16"/>
     <div class="title">Note</div>
